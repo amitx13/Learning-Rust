@@ -4,12 +4,12 @@
 //     email:String,
 // }
 
-enum Shape{
-    Circle(f32), //variend with associated data (radius)
-    Square(f32), //variend with associated data (side length)
-    Rectangle(f32 , f32) //varient with associated data (width , height )
-}
-fn main() {
+// enum Shape{
+//     Circle(f32), //variend with associated data (radius)
+//     Square(f32), //variend with associated data (side length)
+//     Rectangle(f32 , f32) //varient with associated data (width , height )
+// }
+// fn main() {
     // let x:i8 = 13;
     // print!("x => {}\n",x);
 
@@ -53,22 +53,22 @@ fn main() {
     // println!("{}|{}",user.username,user.email);
 
     //Enums
-    let circle = Shape::Circle(3.0);
-    let square = Shape::Square(4.0);
-    let rectangle = Shape::Rectangle(4.0, 2.0);
+    // let circle = Shape::Circle(3.0);
+    // let square = Shape::Square(4.0);
+    // let rectangle = Shape::Rectangle(4.0, 2.0);
 
-    println!("circle area = {}",calculate_area(circle));
-    println!("Square area = {}",calculate_area(square));   
-    println!("Rectangle area = {}",calculate_area(rectangle));
-}
+    // println!("circle area = {}",calculate_area(circle));
+    // println!("Square area = {}",calculate_area(square));   
+    // println!("Rectangle area = {}",calculate_area(rectangle));
+// }
 
-fn calculate_area(shape:Shape) -> f32 {
-    match shape{
-        Shape::Circle(radius)=> 3.24 * radius *radius,
-        Shape::Square(length)=> length*length,
-        Shape::Rectangle(w,h )=> w*h
-    }
-}
+// fn calculate_area(shape:Shape) -> f32 {
+//     match shape{
+//         Shape::Circle(radius)=> 3.14 * radius *radius,
+//         Shape::Square(length)=> length*length,
+//         Shape::Rectangle(w,h )=> w*h
+//     }
+// }
 
 // fn update_string(str: &mut String) { //mutable referense
 //     str.push_str("_hi")
@@ -77,3 +77,42 @@ fn calculate_area(shape:Shape) -> f32 {
 // fn referense_test(str: &String) { //immutable referense
 //     println!("{}", str);
 // }
+// fn main() {
+//     let x = 7;
+//     println!("{}",x);
+//     let x ="amit";
+//     println!("{}",x);
+// }
+
+use std::io;
+use rand::Rng;
+use std::cmp::Ordering;
+
+fn main() {
+    println!("Guess the number!");
+
+    let secret_number = rand::thread_rng().gen_range(1..100);
+    loop{
+        println!("Please input your guess.");
+
+        let mut guess = String::new();
+    
+        io::stdin()
+            .read_line(&mut guess)
+            .expect("Failed to read line"); 
+    
+        let guess: u32 = match guess.trim().parse(){
+            Ok(num) => num,
+            Err(_) => continue,
+        };
+
+        match guess.cmp(&secret_number) {
+            Ordering::Less => println!("Too small !!"),
+            Ordering::Greater => println!("Too big !!"),
+            Ordering::Equal => {
+                println!("You Win !!");
+                break;
+            }
+        }
+    }
+}
