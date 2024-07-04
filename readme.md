@@ -47,6 +47,7 @@ Result’s variants are `Ok` and `Err`. The `Ok` variant indicates the operation
 Using a `Crate` to Get More Functionality
 Remember that a `crate` is a collection of Rust source code files. The project we’ve been building is a `binary crate`, which is an `executable`. The rand crate is a `library crate`, which contains code that is intended to be used in other programs and `can’t be executed on its own`.
 
+Path Separator`::` - is a fundamental part of Rust's syntax for navigating and accessing the hierarchical structures of modules, items, and types within a Rust program.
 
 # Systems language:
     It is intended to be used (but not restricted to) to do lower level things
@@ -182,18 +183,6 @@ fn main() {
         print!("You are a legal male");
     }
 }
-
-# String:
-    let str1:&str = "apx13";
-    print!("str => {}\n",str1);
-    
-    let str2 = String::from("apx13_");
-    print!("str2 => {}\n",str2);
-
-        In Rust, &str and String are both used to represent strings, but they have different ownership and memory management characteristics:
-
-        &str: This is a string slice, which is a reference to a string stored elsewhere. It's a borrowed reference, meaning it doesn't own the data it refers to. It's commonly used for string literals like "apx13" in your example.
-        String: This is a growable, mutable, owned string type provided by the standard library. It owns the string data it contains, allowing for dynamic manipulation such as appending, removing, or modifying characters.
 
 # The Tuple Type:
 A tuple is a general way of `grouping` together a number of values with a `variety of types` into one compound type. Tuples have a `fixed length`: once declared, they cannot grow or shrink in size.
@@ -362,6 +351,15 @@ By default all the variables are immutable
 mmutable data is inherently `thread-safe` because if no thread can alter the data, then no `synchronization` is needed when data is accessed concurrently.And no `race around` condition 
 Knowing that certain data will not change allows the compiler to optimize code better. 
 
+# What Is Ownership?
+Ownership is a set of rules that govern how a Rust program manages memory. All programs have to
+manage the way they use a computer's memory while running. Some languages have garbage
+collection that regularly looks for no-longer-used memory as the program runs; in other languages,
+the programmer must explicitly allocate and free the memory. Rust uses a third approach: memory
+is managed through a system of ownership with a set of rules that the compiler checks. If any of the
+rules are violated, the program won't compile. None of the features of ownership will slow down
+your program while it's running.
+
 # Heap and Memory 
 When something is stored in the heap their is still a ptr ( length ,capacity , pointer ) that is stored in the stack . which points the value in the heap
 
@@ -384,8 +382,8 @@ if there is a mutable referense then immutable referense is not allowed (in case
 
 # Rules of Borrowing that makes it memory safe
 multiple immutable referenses is allowed
-single mutable referenses are allowed at a time (hanky panky)
-if their is a mutable referense then their cannot be another immutable referenses either
+single mutable referenses are allowed at a time (hanky panky) (you cannot pass variable as mutable if variable itself is not mutable)
+if their is a mutable referense then their cannot be another immutable or mutable referenses anymore
 
 This to avoid any data races/inconsistent behaviour
 If someone makes an immutable reference , they don’t expect the value to change suddenly
@@ -419,3 +417,216 @@ fn take_ownership(s: String) -> String {
 }
 
 1.Approach returned the borrowed value 2.Retrun through expression 
+
+# Implement
+
+The `impl` keyword is used to define implementations for types, which can include methods, trait implementations, and associated functions. 
+struct Rectangle {
+    width: f64,
+    height: f64,
+}
+
+impl Rectangle {
+    fn area(&self) -> f64 {
+        self.width * self.height
+    }
+}
+
+fn main() {
+    let Rectangle = Rectangle {
+        width:20,
+        height:30,
+    };
+    println!("The area of the rectangle is {}",Rectangle.area());
+}
+
+# Pattern Matching
+`Rust` has an extremely powerful control flow construct called `match` that allows you to compare a value against a series of patterns and then execute code based on which pattern matches.
+enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter,
+}
+
+fn value_in_cents(coin: Coin) -> u8 {
+    match coin {
+        Coin::Penny => 1,
+        Coin::Nickel => 5,
+        Coin::Dime => 10,
+        Coin::Quarter => 25,
+    }
+}
+
+Matches Are `Exhaustive`
+There’s one other aspect of match we need to discuss: the arms’ patterns must cover all possibilities. 
+Consider this version of our plus_one function, which has a bug and won’t compile:
+
+`error` 
+    fn plus_one(x: Option<i32>) -> Option<i32> {
+        match x {
+            Some(i) => Some(i + 1),
+        }
+    }
+We didn’t handle the `None` case, so this code will cause a bug. 
+
+# Error Handling:
+Errors:
+    Compilation error: no binary got spitt out of the original code.
+    Runtime error: Final binary got created but while this binary was running something got wrong or it got crashed etc.
+
+Error handling in rust is being done using `Result Enum` it is similar to try catch in javascript
+
+Error handling in rust 
+enum Result<A , B>{
+    Ok(A),
+    Err(B),
+}
+implemented using pattern matching
+
+use std::fs
+
+fn main(){
+    let res = fs::read_to_string("example.txt");
+    match res {
+        Ok(content)=> {
+            println!("file content : {}",content)
+        }
+        Err(err)=>{
+            println!("Error :{}",err)
+        }
+    }
+}
+
+# Option Enum:
+The Option enum was introduced in Rüst to handle the concept of `nullability` in a safe and
+expressive way. Unlike many programming languages that use a null or similar keyword to
+represent the absence of a value, Rust doesn't have null.
+
+pub enum Option<T> {
+    None,
+    Some(T),
+}
+
+If you ever have a function that should return null, return an Option instead.
+
+fn return_index(s:String) -> Option<i32>{
+    for (index, character) in s.chars().enumerate() {
+        if character == 'a' {
+            return Some(index as i32);
+        }
+    }
+    return None;
+}
+
+fn main(){
+    let res = return_index("amit".to_string());
+    match res {
+        some(index) => println!("this is the index:{}",index);
+        None => println!("None value found");
+    }
+}
+
+# Crates.
+Just like the nodejs ecosystem has npm, the rust ecosystem has cargo
+Cargo is a package manager for rust, which means we can use it to bring packages (crates in case of rust) to our projects
+
+https://crates.io/crates/chrono - Store time in a DB/as a variable
+https://actix.rs/ - Extremely fast http server
+https://serde.rs/ - Serializing and deserialising data in rust
+https://tokio.rs/ - Asynchronous runtime in rust
+https://docs.rs/reqwest/latest/reqwest/ - Send HTTP requests
+https://docs.rs/sqlx/latest/sqlx/ - Connect to sql database
+
+# Commaon Collections.
+`collections` can contain multiple values. Unlike the built-in array and tuple types, the data these collections point to is stored on the heap, which means the amount of data does not need to be known at compile time and can grow or shrink as the program runs. 
+Each kind of collection has different capabilities and costs, and choosing an appropriate one for your current situation is a skill you’ll develop over time
+
+`vector`
+`String`
+`hash map`
+
+`Vec<T>`, also known as a vector
+ Vectors allow you to store more than one value in a single data structure that puts all the values next to each other in memory. Vectors can only store values of the same type. They are useful when you have a list of items, such as the lines of text in a file or the prices of items in a shopping cart.
+
+Creating a New Vector
+    let v: Vec<i32> = Vec::new();
+
+Initialization
+    let v = vec![1, 2, 3, 4, 5];
+
+Take a look at this example:
+
+perfect use of `immutable reference` , `shadowing` , `Option enum` , `Pattern matching`
+
+    let v = vec![1, 2, 3, 4, 5];
+
+    let third: &i32 = &v[2];
+    println!("The third element is {third}");
+
+    let third: Option<&i32> = v.get(2);
+    match third {
+        Some(third) => println!("The third element is {third}"),
+        None => println!("There is no third element."),
+    }
+
+
+`Borrowing` in case of `Vector`
+
+    let mut v = vec![1, 2, 3, 4, 5];
+
+    let first = &v[0]; //Immutabley borrowed
+
+    v.push(6); //mutabley borrowed 
+
+    println!("The first element is: {first}");
+
+
+But you may think both the index are different and hence both of the memory referenses are different so why should a reference to the first element care about changes at the end of the vector? 
+
+Well the error is due to the way Vector works :
+Because vectors put the values next to each other in memory, adding a new element onto the end of the vector might require allocating new memory and copying the old elements to the new space, if there isn’t enough room to put all the elements next to each other where the vector is currently stored. In that case, the reference to the first element would be pointing to deallocated memory. The borrowing rules prevent programs from ending up in that situation.
+
+`Iteration` in Vector:
+
+    let v = vec![100, 32, 57];
+    for i in &v {
+        println!("{i}");
+    }
+
+
+`String`
+
+Indexng is not supported in rust like it's supported in rust so we ca use string slicing in case of indexing
+
+JS:
+    const s = "apx13"
+    console.log(s[0]) // here a will get printed
+
+Rust:
+    let s = String::from("apx13");
+    println!("{}",s[0]) // is not possible in rust Becz A String is a wrapper over a Vec<u8> and vector stores the string "apx13” is form of bytes
+    let s1 = &s[0..4]; //here ap got coppied brcause each char is of 1 byte and hense it contain first 4 bytes of the string i.e apx1 
+
+Methods for `Iterating` Over Strings;
+
+    for c in "Зд".chars() {
+        println!("{c}");
+    }
+
+    for b in "Зд".bytes() {
+        println!("{b}");
+    }
+
+`Difference between String / &str`
+
+    let str1:&str = "apx13";
+    print!("str => {}\n",str1);
+    
+    let str2 = String::from("apx13_");
+    print!("str2 => {}\n",str2);
+
+`Ownership`: String owns the string data, while &str borrows it.
+`Mutability`: String is mutable; &str is immutable.
+`Memory`: String data is stored on the heap, while &str typically points to data on the stack or within a String.
+`Use cases`: Use String when you need ownership and mutability. Use &str when you need to borrow string data without taking ownership or modifying it.
