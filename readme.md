@@ -546,6 +546,7 @@ Each kind of collection has different capabilities and costs, and choosing an ap
 `String`
 `hash map`
 
+# Vector
 `Vec<T>`, also known as a vector
  Vectors allow you to store more than one value in a single data structure that puts all the values next to each other in memory. Vectors can only store values of the same type. They are useful when you have a list of items, such as the lines of text in a file or the prices of items in a shopping cart.
 
@@ -595,7 +596,7 @@ Because vectors put the values next to each other in memory, adding a new elemen
     }
 
 
-`String`
+# String
 
 Indexng is not supported in rust like it's supported in rust so we ca use string slicing in case of indexing
 
@@ -630,3 +631,61 @@ Methods for `Iterating` Over Strings;
 `Mutability`: String is mutable; &str is immutable.
 `Memory`: String data is stored on the heap, while &str typically points to data on the stack or within a String.
 `Use cases`: Use String when you need ownership and mutability. Use &str when you need to borrow string data without taking ownership or modifying it.
+
+
+# Hash-Map
+it is `Key-value` pair just like object in js or dictonary in python
+
+Creating a New Hash Map
+
+    use std::collections::Hashmap;
+
+    let mut scores = HashMap::new();
+
+    scores.insert(String::from("Blue"), 10);
+    scores.insert(String::from("Yellow"), 50);
+
+    //accessing value in Hashmap
+    let alice = score.get("Blue")
+
+    // Iterate over key-value pairs
+    for (key, value) in &scores {
+        println!("{}: {}", key, value);
+    }
+
+    // Check if a key exists
+    if scores.contains_key("Blue") {
+        println!("Blue is in the HashMap");
+    }
+
+    //Remove a key
+    scores.remove("Blue");
+
+    //Overwriting a Value
+    use std::collections::HashMap;
+
+    let mut scores = HashMap::new();
+
+    scores.insert(String::from("Blue"), 10);
+    scores.insert(String::from("Blue"), 25);
+
+    println!("{scores:?}");
+
+# Unwrap
+The `unwrap` method is used to handle Option and Result types,
+which are commonly used for error handling and dealing with values that may or may not be present. 
+The unwrap method is used to `extract` the value inside an `Option` or `Result`
+
+If the Option is Some or the Result is Ok, it returns the contained value. If the Option is None or the Result is Err, it causes the program to panic and terminate with an error message.
+
+usecase:
+when you are sure that the value will be present and want to ignore error handling temporarily.
+unwrap can lead to runtime panics if the value is None or Err, making the program crash. Therefore, it should be used with caution
+
+what's rust preffered to use `Pattern Matching`, `Combinators (unwrap_or, unwrap_or_else, and_then, etc.)`, `Expect`
+
+# Traits
+• Set of methods that can be implemented for multiple types in order to provide common functionality and behaviour between them
+• Traits constist of method signatures only, which then have to be implemented by the target type
+• Similar to "classes"(abstract class) in other languages, not quite the same though
+• Defines shared behaviour in an abstract way
