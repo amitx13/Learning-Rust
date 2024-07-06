@@ -712,8 +712,13 @@ This declaration is necessary so that Rust knows that Point<T> in the impl block
 Traits in Rust and abstract classes in Java both define a set of methods that must be implemented by any type that wants to adhere to the trait or extend the abstract class.
 Both are used to specify behavior that multiple types can share.
 
-
 • Set of methods that can be implemented for multiple types in order to provide common functionality and behaviour between them
 • Traits constist of method signatures only, which then have to be implemented by the target type
 • Similar to "classes"(abstract class) in other languages, not quite the same though
 • Defines shared behaviour in an abstract way
+
+Traits are used to define methods that can be implemented by any type.
+Traits can contain default method implementations.
+A type can implement multiple traits (Rust supports multiple inheritance through traits).
+Traits can be used as bounds to specify that a generic type must implement certain behavior.
+Traits can’t contain fields, only methods.
