@@ -684,7 +684,35 @@ unwrap can lead to runtime panics if the value is None or Err, making the progra
 
 what's rust preffered to use `Pattern Matching`, `Combinators (unwrap_or, unwrap_or_else, and_then, etc.)`, `Expect`
 
+# Generic
+Generic are same as Ts 
+ex code:
+
+struct Point<T> {
+    x: T,
+    y: T,
+}
+
+impl<T> Point<T> {
+    fn x(&self) -> &T {
+        &self.x
+    }
+}
+
+fn main() {
+    let p = Point { x: 5, y: 10 };
+
+    println!("p.x = {}", p.x());
+}
+
+By declaring <T> after impl, we inform Rust that T is a generic type parameter.
+This declaration is necessary so that Rust knows that Point<T> in the impl block refers to the generic Point<T> struct rather than a Point with some concrete type T.
+
 # Traits
+Traits in Rust and abstract classes in Java both define a set of methods that must be implemented by any type that wants to adhere to the trait or extend the abstract class.
+Both are used to specify behavior that multiple types can share.
+
+
 • Set of methods that can be implemented for multiple types in order to provide common functionality and behaviour between them
 • Traits constist of method signatures only, which then have to be implemented by the target type
 • Similar to "classes"(abstract class) in other languages, not quite the same though
