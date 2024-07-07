@@ -716,9 +716,207 @@ Both are used to specify behavior that multiple types can share.
 • Traits constist of method signatures only, which then have to be implemented by the target type
 • Similar to "classes"(abstract class) in other languages, not quite the same though
 • Defines shared behaviour in an abstract way
+A trait can have multiple methods in its body: the method signatures are listed one per line and each line ends in a semicolon.
 
 Traits are used to define methods that can be implemented by any type.
 Traits can contain default method implementations.
 A type can implement multiple traits (Rust supports multiple inheritance through traits).
 Traits can be used as bounds to specify that a generic type must implement certain behavior.
 Traits can’t contain fields, only methods.
+
+Derivable Traits
+• Trait that can be automatically implemented for a struct or an enum by the Rust compiler
+• Called "derivable" because they can be derived automatically.
+• Most common derivable traits:
+- Debug: Allowing to output content via "{:?}"
+- Clone: Enables type to be duplicated with "clone()" method
+- Copy: Enables type to be copied implicity, without recquiring explicit "clone()" method
+- PartialEq: Enables comparison
+
+Traits as Parameters
+pub fn notify(item: &impl Summary) {
+    println! {"Breaking news! {}", item. summarize()};
+}
+Traits can be used as parameters for functions.
+The function notify () takes as argument any type that has
+implemented the Summary trait.
+
+pub trait Animal {
+    fn sound(&self);
+}
+
+struct Dog;
+
+impl Animal for Dog {
+    fn sound(&self){
+        println!("{}","woof! Woof!");
+    }
+}
+
+fn main(){
+    let dog = Dog;
+    dog.sound();
+}
+
+Adding Default implementation 
+
+pub trait Animal {
+    fn make_sound(&self);
+    fn Breed(&self) -> &str {
+        "unknown"
+    }
+
+    fn Color(&self) -> &str {
+        "unknown"
+    }
+}
+
+struct Dog;
+struct Cat;
+
+impl Animal for Dog {
+    fn make_sound(&self){
+        println!("{}","woof! woof!");
+    }
+    fn Breed(&self) -> &str {
+        "Golden Retriver"
+    }
+}
+
+impl Animal for Cat {
+    fn make_sound(&self){
+        println!("{}","Meow");
+    }
+    fn Color(&self) -> &self{
+        "Black"
+    }
+}
+
+fn main(){
+    let dog = Dog;
+    let cat = Cat;
+    dog.make_sound();
+    cat.make_sound();
+    println!("Breed:{} \n Color:{}",dog.Breed , dog.Color);
+    println!("Breed:{} \n Color:{}",cat.Breed , cat.Color);
+}
+
+//Output
+Woof! Woof!
+Meow
+Breed: Golden Retriver
+Color: unknown
+Breed: unknown
+Color: Black
+
+now in the above example you can see we have not folowed the DRY principle that means the code is not perfect it's still needs modifications
+now here `trait as a parameter` comes into the picture
+where we define a fn that takes traits as a parameter 
+
+fn describe_animal( animal:&impl Animal ){
+    animal.make_sound();
+    println!("Breed:{} \n Color:{}",animal.Breed , animal.Color);
+}
+
+now you will see the main fn will look way cleaner than before
+
+fn main() {
+    let dog = Dog;
+    let cat = Cat;
+    let cow = Cow;
+
+    describe_animal(&dog);
+    describe_animal(&cat);
+    describe_animal(&cow);
+}
+
+# Trait Bound Syntax:
+
+# Single:
+trait Animal {
+    fn makeSound(&self);
+}
+
+//`Basic way`
+simplest way to specify a trait bound is by using the impl Trait syntax.
+
+fn describeAnimal(animal:&impl Animal){
+    animal.makeSound();
+}
+
+//`Generic way`
+fn describeAnimal<T:Animal>(animal:&T){
+    animal.makeSound();
+}
+
+# Multiple:
+
+trait Animal {
+    fn makeSound(&self);
+}
+trait Name{
+    fn Name(&self) -> &str;
+}
+
+//`Basic way || Inline syntax`
+fn describeAnimal(animal:(&impl Animal + Name)){
+    animal.makeSound();
+    println!("name is : {}",animal.Name());
+}
+
+//`Generic type parameter`
+fn describeAnimal<T>(animal:&T)
+where
+    T:Animal+Name,
+{
+    animal.makeSound();
+    println!("name is : {}",animal.name());
+}
+
+`we can also return trait from function`
+
+trait Animal {
+    fn make_sound(&self);
+}
+
+struct Dog;
+struct Cat;
+
+impl Animal for Dog {
+    fn make_sound(&self){
+        println!("{}","woof!");
+    }
+}
+
+impl Animal for Cat {
+    fn makeSound(&self){
+        println!("{}","meow");
+    }
+}
+
+fn create_animal(name:&str) -> impl Animal {
+    if name == "dog" {
+        Dog
+    }
+    else{
+        Cat
+    }
+}
+
+fn main(){
+    let animal = create_animal("dog");
+    animal.makeSound();
+}
+
+# LifeTimes: (Generic Lifetime Annotations)
+`Dangaling referenses`- Referense that points to invalid data and rust dont allow dangaling refrenses
+eg code:
+fn main(){
+    let r;
+    {
+        let x = 8;
+        r = &x; //In rust we can refrense primitive value  
+    }
+    println!("{}",r);
+}
+

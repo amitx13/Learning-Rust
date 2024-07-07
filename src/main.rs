@@ -117,9 +117,127 @@
 //     }
 // }
 
-fn main(){
-    let str = String::from("apx13");
-    let s = &str[0..2];
-    println!("{}",s);
-    println!("{}",str)
+// fn main(){
+//     let str = String::from("apx13");
+//     let s = &str[0..2];
+//     println!("{}",s);
+//     println!("{}",str)
+// }
+
+// Define the trait with default implementations
+// trait Animal {
+//     fn make_sound(&self);
+    
+//     fn breed(&self) -> &str {
+//         "Unknown"
+//     }
+
+//     fn color(&self) -> &str {
+//         "Unknown"
+//     }
+// }
+
+// // Implement the trait for a Dog with specific implementations for make_sound and breed
+// struct Dog;
+
+// impl Animal for Dog {
+//     fn make_sound(&self) {
+//         println!("Woof!");
+//     }
+
+//     fn breed(&self) -> &str {
+//         "Golden Retriever"
+//     }
+// }
+
+// // Implement the trait for a Cat with specific implementations for make_sound and color
+// struct Cat;
+
+// impl Animal for Cat {
+//     fn make_sound(&self) {
+//         println!("Meow!");
+//     }
+
+//     fn color(&self) -> &str {
+//         "Black"
+//     }
+// }
+
+// // Implement the trait for a Cow using default implementations for breed and color
+// struct Cow;
+
+// impl Animal for Cow {
+//     fn make_sound(&self) {
+//         println!("Moo!");
+//     }
+// }
+
+// fn main() {
+//     let dog = Dog;
+//     let cat = Cat;
+//     let cow = Cow;
+
+//     // Call the make_sound method on each animal
+//     dog.make_sound();
+//     println!("Breed: {}, Color: {}", dog.breed(), dog.color());
+
+//     cat.make_sound();
+//     println!("Breed: {}, Color: {}", cat.breed(), cat.color());
+
+//     cow.make_sound();
+//     println!("Breed: {}, Color: {}", cow.breed(), cow.color());
+// }
+
+//Full Example with Multiple Traits
+trait Animal {
+    fn make_sound(&self);
+}
+
+trait Named {
+    fn name(&self) -> &str;
+}
+
+struct Dog;
+
+impl Animal for Dog {
+    fn make_sound(&self) {
+        println!("Woof!");
+    }
+}
+
+impl Named for Dog {
+    fn name(&self) -> &str {
+        "Dog"
+    }
+}
+
+struct Cat;
+
+impl Animal for Cat {
+    fn make_sound(&self) {
+        println!("Meow!");
+    }
+}
+
+impl Named for Cat {
+    fn name(&self) -> &str {
+        "Cat"
+    }
+}
+
+// Function using trait bounds
+fn describe_named_animal<T>(animal: &T)
+where
+    T: Animal + Named,
+{
+    animal.make_sound();
+    println!("Name: {}", animal.name());
+}
+
+fn main() {
+    let dog = Dog;
+    let cat = Cat;
+
+    describe_named_animal(&dog);
+    describe_named_animal(&cat);
 }
