@@ -920,3 +920,27 @@ fn main(){
     println!("{}",r);
 }
 
+Generic lifetimes annotations always starts with a tik(') and (a) followed by any other alphabets and it describe the relationship between the lifetimes of multiple refrenses and how they relate to each other. They don't actually change the lifetime of a referense but rather just explain the relationship between different lifetimes
+
+now you may be thinking what relationship well it specify that the lifetimes of the return type will be the same as the smallest lifetime of the arguments
+and if the lifetime of the smallest argument is valid then we are good
+
+note: All of the comparision is done by the borrowchecker for dangling pointers in case if u are borrowing a value and using it.
+
+Lifetiems of the arguments being passed in are called input lifetimes and lifetimes of the return values are called output lifetimes
+
+`Lifetime Elision`
+`Rules of Lifetimes`
+1. Each parameter that is referense gets its own lifetime parameter
+2. If there is exactely one input lifetime parameter then that lifetime is assigned to all output lifetime parameter.
+3. If there are multiple input lifetime paremeters, but one of them is &self or &mut self then the lifetime of self is assigned to all output lifetime parameters.
+
+`static Lifetime`: The Static lifetimes means referense could live as long as the duration of the program all string literals have a static lifetimes becz string literals are stored in the program's binary
+
+
+# asserts
+`assert!()`  assert check for true and false
+`assert_eq!()`  assert equal 
+`assert_ne!()` asset not equal
+
+`format!()` - It works similar to the println!() but instead of printing the output to the console it returns the string. This can be very useful when you need to generate a string dynamically and use it later in your program.

@@ -189,55 +189,96 @@
 // }
 
 //Full Example with Multiple Traits
-trait Animal {
-    fn make_sound(&self);
-}
+// trait Animal {
+//     fn make_sound(&self);
+// }
 
-trait Named {
-    fn name(&self) -> &str;
-}
+// trait Named {
+//     fn name(&self) -> &str;
+// }
 
-struct Dog;
+// struct Dog;
 
-impl Animal for Dog {
-    fn make_sound(&self) {
-        println!("Woof!");
-    }
-}
+// impl Animal for Dog {
+//     fn make_sound(&self) {
+//         println!("Woof!");
+//     }
+// }
 
-impl Named for Dog {
-    fn name(&self) -> &str {
-        "Dog"
-    }
-}
+// impl Named for Dog {
+//     fn name(&self) -> &str {
+//         "Dog"
+//     }
+// }
 
-struct Cat;
+// struct Cat;
 
-impl Animal for Cat {
-    fn make_sound(&self) {
-        println!("Meow!");
-    }
-}
+// impl Animal for Cat {
+//     fn make_sound(&self) {
+//         println!("Meow!");
+//     }
+// }
 
-impl Named for Cat {
-    fn name(&self) -> &str {
-        "Cat"
-    }
-}
+// impl Named for Cat {
+//     fn name(&self) -> &str {
+//         "Cat"
+//     }
+// }
 
-// Function using trait bounds
-fn describe_named_animal<T>(animal: &T)
-where
-    T: Animal + Named,
-{
-    animal.make_sound();
-    println!("Name: {}", animal.name());
-}
+// // Function using trait bounds
+// fn describe_named_animal<T>(animal: &T)
+// where
+//     T: Animal + Named,
+// {
+//     animal.make_sound();
+//     println!("Name: {}", animal.name());
+// }
 
-fn main() {
-    let dog = Dog;
-    let cat = Cat;
+// fn main() {
+//     let dog = Dog;
+//     let cat = Cat;
 
-    describe_named_animal(&dog);
-    describe_named_animal(&cat);
+//     describe_named_animal(&dog);
+//     describe_named_animal(&cat);
+// }
+
+//Generic Lifetimes Annotations:
+// fn main(){
+//     let s1 = String::from("Hey there!");
+//     let s2 = String::from("apx13");
+
+//     let res = longest_string(s1.as_str() , s2.as_str());
+//     println!("the longest str is : {}",res);
+// }
+
+// fn longest_string<'a>(str1:&'a str , str2:&'a str) -> & 'a str {
+//     if str1.len() > str2.len(){
+//         str1
+//     }else{
+//         str2
+//     }
+    
+// }
+
+// fn main(){
+//     let s1 = String::from("Hey there!");
+//     {
+//     let s2 = String::from("apx13");
+//     let res = longest_string(s1.as_str() , s2.as_str()); //now the lifetime of the res will be similar of s2 acc to generic lifetime annotations
+//     println!("the longest str is : {}",res);
+//     }
+// }
+
+// fn longest_string<'a>(str1:&'a str , str2:&'a str) -> &'a str {
+//     if str1.len() > str2.len(){
+//         str1
+//     }else{
+//         str2
+//     }
+    
+// }
+
+//Testing:
+fn main(){
+    
 }
