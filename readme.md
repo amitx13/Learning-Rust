@@ -944,3 +944,6 @@ Lifetiems of the arguments being passed in are called input lifetimes and lifeti
 `assert_ne!()` asset not equal
 
 `format!()` - It works similar to the println!() but instead of printing the output to the console it returns the string. This can be very useful when you need to generate a string dynamically and use it later in your program.
+
+eprintln!()
+> in terminal for writing output to a certain file
