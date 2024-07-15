@@ -278,7 +278,74 @@
     
 // }
 
-//Testing:
+//WAP to take two numbers as input and perform calculations and print the output:
+// use std::{error::Error, io};
+// fn main(){
+//     println!("Please Enter two numbers:");
+//     let num1 = take_ins();
+//     let num2 = take_ins();
+//     println!("What operation do you wanna perform +, -, *, /, %");
+//     let sign = sign_ins();
+//     match perform_operations(&num1, &num2, sign) {
+//         Ok(result) => println!("Result of {} {} {}: {}", num1, sign, num2, result),
+//         Err(e) => println!("Error: {}", e),
+//     }
+// }
+
+// fn take_ins()-> usize{
+//     let mut num = String::new();
+//     io::stdin().read_line(&mut num).expect("not a valid String");
+//     num.trim().parse().expect("cannot be converted into Integer")
+// }
+
+// fn sign_ins()-> char{
+//     let mut sign = String::new();
+//     io::stdin().read_line(&mut sign).expect("not a valid String");
+//     sign.trim().chars().next().expect("cannot be converted into char")
+
+// }
+
+
+// fn perform_operations(num1:&usize, num2:&usize , sign:char) -> Result<usize, Box<dyn Error>> {
+//     match sign {
+//         '+' => Ok(num1 + num2),
+//         '-' => Ok(num1 - num2),
+//         '*' => Ok(num1 * num2),
+//         '/' => {
+//             if *num2 != 0 {
+//                 Ok(num1 / num2)
+//             } else {
+//                 Err("Division by zero is not allowed".into())
+//             }
+//         }
+//         '%' => {
+//             if *num2 != 0 {
+//                 Ok(num1 % num2)
+//             } else {
+//                 Err("Modulo by zero is not allowed".into())
+//             }
+//         }
+//         _ => Err("Invalid operation sign".into()),
+//     }
+// }
+
+//WAP for febonacci series
+use std::{error::Error, io};
 fn main(){
-    
+    println!("Enter a number of terms in the febonacci series");
+    let num = input_num_of_term();
+    match num {
+        Ok(num) => println!("Entered n'th term is : {}",num),
+        Err(smt) => println!("{}",smt)
+    }
 }
+
+fn input_num_of_term() -> Result<usize,Box<dyn Error>>{
+    let mut num = String::new();
+    io::stdin().read_line(& mut num)?;
+    let trimmed_number = num.trim();
+    match trimmed_number.parse(){
+        Ok(num) => Ok(num),
+        Err(..) => Err("cannot be parsed into num".into())
+    }
+} 
