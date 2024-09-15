@@ -48,6 +48,10 @@ Using a `Crate` to Get More Functionality
 Remember that a `crate` is a collection of Rust source code files. The project we’ve been building is a `binary crate`, which is an `executable`. The rand crate is a `library crate`, which contains code that is intended to be used in other programs and `can’t be executed on its own`.
 
 Path Separator`::` - is a fundamental part of Rust's syntax for navigating and accessing the hierarchical structures of modules, items, and types within a Rust program.
+Accessing items in modules or sub-modules.
+Calling associated functions (static methods) or constructors.
+
+`.` - Calling methods on an instance of a type. Accessing fields of a struct or tuple.
 
 # Systems language:
     It is intended to be used (but not restricted to) to do lower level things
@@ -187,6 +191,8 @@ fn main() {
 # The Tuple Type:
 A tuple is a general way of `grouping` together a number of values with a `variety of types` into one compound type. Tuples have a `fixed length`: once declared, they cannot grow or shrink in size.
 
+`Remember - Declaring tuple as mut only allows you to modify the values inside the tuple, but not its length. Even if a tuple is mutable, you cannot add or remove elements after it has been declared.`
+
 We create a tuple by writing a comma-separated list of values inside parentheses
 
 eg. `let tup: (i32, f64, u8) = (500, 6.4, 1);`
@@ -205,20 +211,25 @@ We can also access a tuple element directly by using a period (.) followed by th
 
 Another way to have a collection of multiple values is with an array. Unlike a tuple, every element of an array must have the `same type`. Unlike arrays in some other languages, arrays in Rust have a `fixed length`.
 
+`Remember - Declaring array as mut only allows you to modify the values inside the array, but not its length. Even if a array is mutable, you cannot add or remove elements after it has been declared.`
+
 Arrays are useful when you want your data allocated on the `stack` rather than the `heap`
 A `vector` is a similar collection type provided by the standard library that is allowed to `grow` or `shrink` in size.
 
 let a: [i32; 5] = [1, 2, 3, 4, 5];
 let a = [3; 5]; // = [3,3,3,3,3]
 
-# Statements and Expressions:
+# Statements, Expressions and Items:
+
+The `fn main() { ... }` block is an item.
+Items are the building blocks of a Rust program. They define things like functions, modules, structs, and constants.
+Function definitions do not produce a value or evaluate to a result, which is why they aren't classified as expressions or statements.
+
 Statements are instructions that perform `some action and do not return a value.`
 statement example:
 fn main() {
     let y = 6;
 }
-
-`Function` definitions are also statements; the entire preceding example is a statement in itself.
 
 Statements do not return values. Therefore, you can’t assign a `let` statement to another variable, as the following code tries to do; you’ll get an `error`:
 Error: `let x = (let y = 6);`
@@ -243,7 +254,10 @@ fn main() {
 Keep in mind:
 Note that the `x + 1` line doesn’t have a `semicolon` at the end, which is unlike most of the lines you’ve seen so far. `Expressions do not include ending semicolons`. If you add a `semicolon` to the end of an `expression`, you turn it into a `statement`, and it will then not return a value.
 
-# Conditions:
+# Conditions: 
+
+`In Rust, the if-else expression requires that both branches return the same type.`
+
 pub fn main() {
     let x = 99;
     let is_even = is_even(x);
@@ -261,7 +275,7 @@ pub fn is_even(x: i32) -> bool {
 Note:pub is short for "public", and it's used to specify the visibility of items such as functions, structs, enums, and other declarations.
 
 let number = if condition { 5 } else { 6 }; can also be used in assigning variable but the point here is it should be of same type 
-like if condition { 5 } else { "six } will throw an error
+like if condition { 5 } else { "six" } will throw an error
 
 # Loops:
 
@@ -307,28 +321,19 @@ Note:In Rust, the main function serves as the entry point for executable program
 # Memory management:
 # Garbage collector
 1. Written by smart people
-2. Usually no danging
-pointers/memory issuse
-3. You cant do manual
-memory management
-4. Examples - Java, IS
+2. Usually no dangling pointers/memory issuse
+3. You cant do manual memory management
+4. Examples - Java, JS
 
 # Manual:
-1. You allocate and
-deallocate memory yourself
-2. Can lead to danging
-pointers/memory issuse
-3. Learning curve is high
-since you have to do manual
-MM
-Examples - c
+1. You allocate and deallocate memory yourself
+2. Can lead to danging pointers/memory issuse
+3. Learning curve is high since you have to do manual MM
+4. Examples - c
 
 # The rust way:
-1. Rust has its own
-ownership model for memory
-management
-2. Makes it extremely safe
-to memory errors
+1. Rust has its own ownership model for memory management
+2. Makes it extremely safe to memory errors
 
 # Memory Management in Rust:
 Rust has it's own ownership model for memory management which makes it's extremely safe to memory errors
@@ -348,7 +353,7 @@ Lifetimes: Lifetimes ensure that references are valid for as long as they are ne
 
 # Mutability
 By default all the variables are immutable 
-mmutable data is inherently `thread-safe` because if no thread can alter the data, then no `synchronization` is needed when data is accessed concurrently.And no `race around` condition 
+Immutable data is inherently `thread-safe` because if no thread can alter the data, then no `synchronization` is needed when data is accessed concurrently.And no `race around` condition 
 Knowing that certain data will not change allows the compiler to optimize code better. 
 
 # What Is Ownership?
@@ -374,11 +379,12 @@ borowing can be done in two ways
 1. `mutable referenses`
 2. `ImMutable referenses`
 like rihana can have multiple borower but in case of multiple borower she cannot do hanky panky (`ImMutable referenses`) with anyone but if she still wants to do hanky-panky with borower she is only allowed to have only one borower(`mutable referenses`)
+
 note: if owner goes out of scope all the borower will die and if borower goes out of acope it doesn't effect the owner
 
 # mutable referenses
 only one mutable referense is allowed
-if there is a mutable referense then immutable referense is not allowed (in case u are using the mutable referense but if u are not using the mutable referense then the immutable referense can exists) 
+if there is a mutable referense then immutable referense is not allowed (in case u have declared the mutable referense but if u are not using the mutable referense then the immutable referense can exists) 
 
 # Rules of Borrowing that makes it memory safe
 multiple immutable referenses is allowed
@@ -538,7 +544,7 @@ https://tokio.rs/ - Asynchronous runtime in rust
 https://docs.rs/reqwest/latest/reqwest/ - Send HTTP requests
 https://docs.rs/sqlx/latest/sqlx/ - Connect to sql database
 
-# Commaon Collections.
+# Commaon Collections. 
 `collections` can contain multiple values. Unlike the built-in array and tuple types, the data these collections point to is stored on the heap, which means the amount of data does not need to be known at compile time and can grow or shrink as the program runs. 
 Each kind of collection has different capabilities and costs, and choosing an appropriate one for your current situation is a skill you’ll develop over time
 
