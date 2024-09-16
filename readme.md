@@ -604,7 +604,7 @@ Because vectors put the values next to each other in memory, adding a new elemen
 
 # String
 
-Indexng is not supported in rust like it's supported in rust so we ca use string slicing in case of indexing
+Indexng is not supported in rust like it's supported in JS so we ca use string slicing in case of indexing
 
 JS:
     const s = "apx13"
