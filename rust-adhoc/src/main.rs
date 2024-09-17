@@ -147,9 +147,57 @@
 
 //Vector:
 
-fn main(){
-    let mut vec = Vec::new();
-    vec.push(1);
-    vec.push(2);
-    println!("{:?}",vec);
-}
+// fn main(){
+//     let mut vec = vec![1,2,3,4,5,6,7,8,9,10];
+
+//     return_even_vec(&mut vec);
+
+//     println!("{:?}",vec);
+// }
+
+// // The &i in the for loop is a shorthand that simplifies dereferencing the reference directly in the loop's body.
+// fn return_even_vec(vec:&mut Vec<i32>){
+    
+//     let mut even_vec = Vec::new();
+//     for i in vec.iter(){
+//         if *i % 2 == 0 {
+//             even_vec.push(*i);
+//         }
+//     }
+//     *vec = even_vec
+// }
+
+
+// fn main(){
+//     //Array are primitives in rust so they are stored in stack and not in heap so that's why there is no error
+//     //as array is stored in stack and it's value is copied to arr2
+//     let arr1 = [1,2,3];
+//     let arr2 = arr1;
+//     println!("{:?}",(arr1,arr2));
+// }
+
+//Hashmap
+
+// use std::collections::HashMap;
+// //insert
+// //get
+// //remove
+// //clear
+// fn main(){
+//     let mut hash = HashMap::new();
+//     hash.insert("apx13", 13);
+//     hash.insert("apx14", 14);
+
+//     println!("{:?}",hash);
+
+//     let first_user = hash.get("apx13");
+//     match first_user {
+//         Some(_) => {
+//             hash.remove("apx13");
+//         },
+//         None => println!("No value found"),
+//     }
+
+//     println!("{:?}",hash);
+
+// }
