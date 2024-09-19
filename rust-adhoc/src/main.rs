@@ -201,3 +201,78 @@
 //     println!("{:?}",hash);
 
 // }
+
+//ITERATORS:
+//.iter()
+//.iter_mut()
+//.into_iter()
+
+// fn main() {
+//     let vec = vec![1, 2, 3, 4, 5];
+//     let iterator = vec.iter();
+//     println!("{:?}", iterator);
+// }
+
+// fn main(){
+//     let  vec = vec![1,2,3,4,5];
+//     // let mut iterator = vec.iter();
+//     let mut iterator = vec.into_iter();
+
+
+//     while let Some(val) = iterator.next(){
+//         println!("{}",val);
+//     }
+
+//     // for i in iterator {
+//     //     println!("{}",i);
+//     // }
+// }
+
+//Ex - consuming adaptors
+// fn main() {
+//     let vec = vec![1,2,3];
+//     let iterator = vec.iter();
+//     let total:i32 = iterator.sum();
+
+//     println!("the total of vec: {}",total);
+
+//     //let total2:i32 = iterator.sum(); //can't be called again here becz calling the sum earlier uses up the iterator.
+// }
+
+//Ex - Iterator adaptors
+// fn main() {
+//     let vec = vec![1,2,3];
+//     let iter = vec.iter();
+//     let iter_2 = iter.map(|x| *x + 1);
+
+//     // for i in iter_2 {
+//     //     println!("{}",i);
+//     // }
+
+//     let iter_3 = iter_2.filter(|x| *x % 2 == 0);
+
+//     for j in iter_3 {
+//         println!("{}",j);
+//     }
+// }
+
+//WAP to first find all odd values and then double each value and create a new vector 
+
+// fn main(){
+//     let vec = vec![1,2,3,4,5,6,7,8];
+//     let val = vec.iter().filter(|x| *x % 2 != 0 ).map(|x| x * 2);
+//     // for i in val {
+//     //     println!("{}",i)
+//     // }
+
+//     //or 
+
+//     let new_vec:Vec<i32> = val.collect();
+//     println!("{:?}",new_vec);
+// }
+
+fn main(){
+    let word1 = String::from("Hello world");
+    let first_word = &word1[0..5];
+    println!("{}",first_word)
+}

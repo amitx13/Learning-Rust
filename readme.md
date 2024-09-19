@@ -953,3 +953,24 @@ Lifetiems of the arguments being passed in are called input lifetimes and lifeti
 
 eprintln!()
 In terminal for writing output to a certain file
+
+# Iterators:
+.iter()
+The iter method in Rust provides a way to iterate over the elements of a collection by `borrowing` them. immutable reference to the inner variable and don't want to transfer ownership.
+.iter_mut() - mutable referense of the inner variable and don't want to transfer ownership.
+.into_iter() - the into Iterator trait is to convert collection into an iterator and takes the ownership of the collection
+    usefull - 1. you no longet need the original collection 
+              2. when you need to squeeze performance benefits by transfering ownership (avoiding reference)
+
+Iterators provide us some function:
+consuming adaptors - methods that call next are called consuming adaptors, because calling them uses up the iterator
+Iterator adaptors - This are methods define on the iterator trait that don't consume the iterator. Instead, they produced different iterator by changing some aspect of the original iterator.
+
+# Slices:
+
+slices let you reference a contiguous sequence of element in a collection rather than the whole collection. A slice is a kind of reference, so it does not have ownership.
+
+3 types of commenly used string in Rust:
+1. String::from("HEllo"); get stored in the heap and there is a pointer pointing it which is stored in the stack 
+2. string slice - Has a view in the original string / is a immutable reference
+3. string literal - literal is also an &str but it points directly to the address in the binary instead of some memory
