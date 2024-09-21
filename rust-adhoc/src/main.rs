@@ -271,8 +271,46 @@
 //     println!("{:?}",new_vec);
 // }
 
+// fn main(){
+//     let word1 = String::from("Hello world");
+//     let first_word = &word1[0..5];
+//     println!("{}",first_word)
+// }
+
+
+//Lifetimes: how output ka lifetime is associated to input ka lifetime.
+
+// fn main(){
+//     let mut ans1 = String::from("apx");
+//     {
+//         ans1 = String::from("13");
+//     }
+//     println!("{}",ans1)
+// }
+
+
+// fn greatest <'a> (a: & 'a str , b: &'a str) -> &'a str {
+//     if a.len() > b.len() {
+//         a
+//     } else {
+//         b
+//     }
+// }
+// fn main(){
+//     let var1 = String::from("apx"); 
+//     let var2 = String::from("13");
+//     let ans = greatest(&var1, &var2);
+//     println!("greatest string is: {}",ans);
+// }
+
+//Lifetime in Struct
+
+struct User <'a>{
+    name: &'a str
+}
+
 fn main(){
-    let word1 = String::from("Hello world");
-    let first_word = &word1[0..5];
-    println!("{}",first_word)
+    let first_user = String::from("amit");
+    let user1 = User { name: &first_user };
+    println!(" The name of the first user is: {}::{}",user1.name,first_user);
 }

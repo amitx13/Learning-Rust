@@ -719,7 +719,7 @@ Traits in Rust and abstract classes in Java both define a set of methods that mu
 Both are used to specify behavior that multiple types can share.
 
 • Set of methods that can be implemented for multiple types in order to provide common functionality and behaviour between them
-• Traits constist of method signatures only, which then have to be implemented by the target type
+• Traits constist of method signatures and default implementation, which then have to be implemented by the target type
 • Similar to "classes"(abstract class) in other languages, not quite the same though
 • Defines shared behaviour in an abstract way
 A trait can have multiple methods in its body: the method signatures are listed one per line and each line ends in a semicolon.
@@ -974,3 +974,6 @@ slices let you reference a contiguous sequence of element in a collection rather
 1. String::from("HEllo"); get stored in the heap and there is a pointer pointing it which is stored in the stack 
 2. string slice - Has a view in the original string / is a immutable reference
 3. string literal - literal is also an &str but it points directly to the address in the binary instead of some memory
+
+# Multithreading:
+In most current operating systems, an executed program's code is run in a process, and the operating system will manage multiple processes at once. Within a program, you can also have independent parts that run simultaneously. The features that run these independent parts are called threads. For example, a web server could have multiple threads so that it could respond to more than one request at the same time.
