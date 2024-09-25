@@ -977,3 +977,11 @@ slices let you reference a contiguous sequence of element in a collection rather
 
 # Multithreading:
 In most current operating systems, an executed program's code is run in a process, and the operating system will manage multiple processes at once. Within a program, you can also have independent parts that run simultaneously. The features that run these independent parts are called threads. For example, a web server could have multiple threads so that it could respond to more than one request at the same time.
+
+# Channel:
+A channel has two halves: a transmitter and a receiver.One part of your code call method on the transmitter with the data you want to send, and another part checks the receiving end for arriving messages. A channel is said to be closed if either the transmitting half or the receiving half goes out of scope.
+
+we create channel in rust using mpsc: (multiple producers single consumer)
+
+# Futures and Async/Await Paradigm:
+Futures in Rust represent values that might not have been computed yet. They are a way for the program to describe an operation that will be completed at some point in the future, or will complete asynchronously. They are a cornerstone of many async applications in Rust. A Future is an asynchronous computation that can produce a value (Ok-type) or an error (Err-type). The critical idea behind futures is that they can produce their value at some point in time, that “sometime” can be now, in the future, or never.

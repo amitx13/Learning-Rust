@@ -305,12 +305,59 @@
 
 //Lifetime in Struct
 
-struct User <'a>{
-    name: &'a str
-}
+// struct User <'a>{
+//     name: &'a str
+// }
+
+// fn main(){
+//     let first_user = String::from("amit");
+//     let user1 = User { name: &first_user };
+//     println!(" The name of the first user is: {}::{}",user1.name,first_user);
+// }
+
+//Multithreading:
+
+// use std::thread;
+// use std::time::Duration;
+
+// fn main(){
+//     thread::spawn(|| {
+//         for i in 1..1000000000 {
+//             println!("spawn Thread: {}",i);
+//             // thread::sleep(Duration::from_millis(1));
+//         }
+//     });/* .join().unwrap(); */ //join is used to await for the spawned thread to finish before running the iteration on the main thread
+
+//     for i in 1..1000000000 {
+//         println!("Main Thread: {}",i);
+//     }
+
+// }
+
+// use std::thread;
+
+
+// fn main(){
+//     let vec = vec![1,2,3,4,5,6,7,8,9,10];
+//     thread::spawn(move || { 
+//         /*  move is used to move the ownership of the variable to the spawned thread because vec could go out of scope
+//             before the spawned thread finishes executing */
+//         println!("{:?}",vec);
+//     }).join().unwrap();
+// }
+
+// mpsc channel
+
+use std::{sync::mpsc, thread};
 
 fn main(){
-    let first_user = String::from("amit");
-    let user1 = User { name: &first_user };
-    println!(" The name of the first user is: {}::{}",user1.name,first_user);
+    let (tx ,rx) = mpsc::channel();
+
+    thread::spawn(move || {
+        let val = String::from("apx");
+        tx.send(val).unwrap();
+    });
+
+    let val:String = rx.recv().unwrap();
+    println!("Received value: {}",val);
 }
